@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-import com.applozic.mobicomkit.api.notification.MobiComPushReceiver
+import com.applozic.mobicomkit.api.notification.MobiComPushReceiver;
 
 @SuppressLint("NewApi")
 public class FCMService extends FirebaseMessagingService implements PushConstants {
@@ -73,10 +73,13 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
         Log.d(LOG_TAG, "onMessage - from: " + from);
 
          if(message.getData().size() > 0){
+            try{
             if (MobiComPushReceiver.isMobiComPushNotification(message.getData())) {
                 Log.i("ApplozicPushData", "Applozic notification processing...");
                 MobiComPushReceiver.processMessageAsync(this, message.getData());
                 return;
+            }}catch(Exception e){
+                e.printStackTrace();
             }
         }
 
